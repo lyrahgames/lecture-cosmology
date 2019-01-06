@@ -1,0 +1,581 @@
+\documentclass[a4paper,fleqn,10pt]{article}
+\usepackage{standard}
+\usepackage{multicol}
+\geometry{top=30mm,bottom=30mm,left=30mm,right=30mm}
+\begin{document}
+  \hrule
+  \medskip
+  \begin{center}
+    \Large
+    \textbf{Kosmologie: Übungsserie 1}
+  \end{center}
+  \medskip
+  \begin{minipage}[t]{0.45\textwidth}
+    Markus Pawellek
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \begin{raggedleft}
+      markuspawellek@gmail.com\\
+    \end{raggedleft}
+  \end{minipage}
+  \medskip
+  \hrule
+  \bigskip
+
+  \section*{Aufgabe 1} % (fold)
+  \begin{multicols}{2}
+  \label{sec:aufgabe_1}
+    \paragraph{(a):}
+    Ein Teilchen der Masse $m\in\setReal^+$ bewege sich reibungsfrei und nur unter Einwirkung einer Zwangskraft, erzeugt durch die Zwangsbedingung $g$, auf der zweidimensionalen Kugeloberfläche $\mathscr{S}^2$ mit Radius $R\in \setReal^+$.
+    \[
+      \function{g}{\setReal^3}{\setReal}
+      \separate
+      g(x)\define R^2 - \norm{x}^2
+    \]
+    \begin{align*}
+      \mathscr{S}^2
+      \define &\set{x\in\setReal^3}{\norm{x} = R} \\
+      = &\set{x\in\setReal^3}{g(x) = 0}
+    \end{align*}
+    Durch die folgende surjektive stetig differenzierbare Abbildung Φ wird ein System generalisierter Koordinaten, die die Zwangsbedingung $g$ automatisch erfüllen, konstruiert.
+    \[
+      \function{Φ}{[0,π]\times[0,2π)}{\setReal^3}
+    \]
+    \[
+      Φ(ϑ,φ)\define R
+      \begin{pmatrix}
+        \sin ϑ \cos φ \\
+        \sin ϑ \sin φ \\
+        \cos ϑ
+      \end{pmatrix}
+    \]
+    \[
+      \mathrm{im}\roundBrackets{g\circ Φ} = \set{0}{}
+    \]
+    Die entsprechende Jacobi-Matrix $\jacobian{Φ}$ der Abbildung Φ ergibt sich dann wie folgt für alle $ϑ\in [0,π]$ und $φ\in[0,2π)$.
+    \[
+      \jacobian{Φ}(ϑ,φ) = R
+      \begin{pmatrix}
+        \cos ϑ \cos φ & -\sin ϑ \sin φ \\
+        \cos ϑ \sin φ & \sin ϑ \cos φ \\
+        -\sin ϑ & 0
+      \end{pmatrix}
+    \]
+    Es sei nun $x$ die zweimal stetig differenzierbare Kurve, die das Teilchen in Bezug auf die Zeit im Inertialsystem zurücklegt, und $q$ die zweimal stetig differenzierbare Kurve, die das Teilchen im Konfigurationsraum zurücklegt.
+    \[
+      \function{x}{[t_1,t_2]}{\setReal^3}
+    \]
+    \[
+      \function{q}{[t_1,t_2]}{[0,π]\times[0,2π)}
+    \]
+    \[
+      x = Φ\circ q
+    \]
+    Für die kinetische Energie $T$ des Teilchens ergibt sich die folgende Formel.
+    \begin{align*}
+      T
+      &= \frac{m}{2} \norm{\timeDerivative{x}}^2
+      = \frac{m}{2}\norm{\roundBrackets{Φ\circ q}'}^2 \\
+      &= \frac{m}{2}\norm{ \roundBrackets{\jacobian{Φ}\circ q} \cdot \timeDerivative{q} }^2 \\
+      &= \frac{m}{2} \roundBrackets{ \transpose{\timeDerivative{q}} \boxBrackets{\roundBrackets{\transpose{\jacobian{Φ}}\jacobian{Φ}}\circ q} \timeDerivative{q} } \\
+      &= \frac{m}{2} \roundBrackets{g_{mn}\circ q} \cdot \timeDerivative{q}^m \timeDerivative{q}^n
+    \end{align*}
+    Der metrischen Tensor $\roundBrackets{g_{mn}}$ lässt sich direkt berechnen.
+    \[
+      \roundBrackets{g_{mn}}_{m,n\in\set{1,2}{}}(ϑ,φ) =
+      \begin{pmatrix}
+        R^2 & 0 \\
+        0 & R^2\sin^2 ϑ
+      \end{pmatrix}
+    \]
+    Explizit kann damit die kinetische Energie wie folgt beschrieben werden.
+    \[
+      T = \frac{mR^2}{2}\roundBrackets{\timeDerivative{ϑ}^2 + \timeDerivative{φ}^2 \sin^2ϑ}
+    \]
+    \[
+      ϑ \define q^1
+      \separate
+      φ \define q^2
+    \]
+    Die dem Teilchen entsprechende Lagrange-Funktion kann nun nach dieser Betrachtung formuliert werden.
+    \[
+      \function{L}{\setReal\times\setReal^2\times\setReal^2}{\setReal}
+    \]
+    \[
+      L\roundBrackets{t,ϑ,φ,{\timeDerivative{ϑ},\timeDerivative{φ}}} \define \frac{mR^2}{2}\roundBrackets{\timeDerivative{ϑ}^2 + \timeDerivative{φ}^2\sin^2ϑ}
+    \]
+    Die Wirkung $S$ wird standardmäßig durch ein Integral über die Lagrange-Funktion definiert.
+    \[
+      \function{S}{\mathrm{C}^2[t_1,t_2]}{\setReal}
+    \]
+    \[
+      S(q) \define \integral{t_1}{t_2}{ L(t,q(t),\dot{q}(t)) }{t}
+    \]
+    Für eine stationäre Lösung der Wirkung $S$, formulieren wir die äquivalenten Euler-Lagrange-Gleichungen für $m\in\set{1,2}{}$.
+    \[
+      \leibnizDerivative{}{t}\partial_{m+3} L(t,q(t),\dot{q}(t)) = \partial_{m+1} L(\cdot,q,\dot{q})
+    \]
+    In expliziter Form lassen sie sich wie folgt aufschreiben.
+    Dabei wurde bereits durch den Term $mR^2/2$ geteilt.
+    \[
+      \ddot{ϑ} - \dot{φ}^2\sinϑ\cosϑ = 0
+    \]
+    \[
+      \ddot{φ}\sin^2ϑ + 2\dot{φ}\dot{ϑ}\sinϑ\cosϑ = 0
+    \]
+    Diese Gleichungen formen wir nun in die Geodätengleichungen um, damit das Ablesen der Christoffel-Symbole möglich wird.
+    Hierbei wollen wir die Fälle $ϑ=0$ und $ϑ=π$ ignorieren.
+    \[
+      \ddot{ϑ} - \dot{φ}^2\sinϑ\cosϑ = 0
+    \]
+    \[
+      \ddot{φ} + 2\dot{φ}\dot{ϑ}\cot ϑ = 0
+    \]
+    Die Christoffel-Symbole lassen sich nun leicht durch Ablesen bestimmen und in folgender Form notieren.
+    \[
+      \roundBrackets{Γ^1_{mn}}_{m,n\in\set{1,2}{}}(ϑ,φ) =
+      \begin{pmatrix}
+        0 & 0 \\
+        0 & -\frac{1}{2}\sin 2ϑ
+      \end{pmatrix}
+    \]
+    \[
+      \roundBrackets{Γ^2_{mn}}_{m,n\in\set{1,2}{}}(ϑ,φ) =
+      \begin{pmatrix}
+        0 & \cot ϑ \\
+        \cot ϑ & 0
+      \end{pmatrix}
+    \]
+
+    Für einen beliebigen Längenkreis auf der Kugeloberflächen gilt nun $\dot{φ} = 0$.
+    Wenden wir dies auf die Geodätengleichungen an, so erhalten wir sofort $\ddot{ϑ}=0$.
+    Die Funktion ϑ lässt sich demnach wie folgt für gewisse Konstanten $ϑ_0\in [0,π]$ und $a\in \setReal$ und alle $t\in[t_1,t_2]$ notieren.
+    \[
+      ϑ(t) = ϑ_0 + at
+    \]
+    Dabei handelt es sich aber gerade um einen beliebigen Ausschnitt eines Längenkreises.
+    Insbesondere ist damit auch jeder gesamte Längenkreis eine Lösung der Geodätengleichungen.
+
+    Für einen beliebigen Breitenkreis gilt $\dot{ϑ} = 0$.
+    Auch diese Gleichung wenden wir wieder auf die Geodätengleichungen an.
+    \[
+      \dot{φ}^2\sin 2ϑ = 0
+      \separate
+      \ddot{φ} = 0
+    \]
+    Für den Fall das $\dot{φ} = 0$ gilt, ergibt sich für die Lösung ein einziger Punkt auf der Kugeloberfläche.
+    Der übrige Fall $\sin2ϑ = 0$ ist nur für $ϑ\in\set{0,\frac{π}{2},π}{}$ erfüllt.
+    Auch hier ergeben sich für $ϑ\in\set{0,π}{}$ wieder einzelne Punkte als Lösung.
+    Für $ϑ=\frac{π}{2}$ erhalten wir jedoch analog zu den Längenkreisen die einfache Bedingung $\ddot{φ}=0$.
+    Die Lösung stellt also einen beliebigen Ausschnitt des Äquators dar.
+    Insbesondere ist damit der gesamte Äquator der einzige Breitenkreis, der eine Lösung der Geodätengleichungen darstellt.
+
+    \paragraph{(b):}
+    Die Polarkoordinaten können durch die folgende surjektive stetig differenzierbare Abbildung definiert werden.
+    \[
+      \function{Φ}{\setReal\times\setReal_0^+\times[0,2π)}{\setReal^3}
+    \]
+    \[
+      Φ(ct,r,φ)\define
+      \begin{pmatrix}
+        ct \\
+        r \cosφ \\
+        r \sinφ
+      \end{pmatrix}
+    \]
+    Die Ableitung oder auch Jacobi-Matrix dieser Abbildung kann wie folgt für alle $t\in\setReal$, $r\in\setReal^+_0$ und $φ\in[0,2π)$ notiert werden.
+    \[
+      \jacobianΦ(ct,r,φ) =
+      \begin{pmatrix}
+        1 & 0 & 0 \\
+        0 & \cosφ & -r\sinφ \\
+        0 & \sinφ & r\cosφ
+      \end{pmatrix}
+    \]
+    Weiterhin wollen wir die Minkowski-Metrik dieser flachen Raumzeit einführen.
+    \[
+      η \define \roundBrackets{η_{mn}} \define \roundBrackets{η^{mn}} \define
+      \begin{pmatrix}
+        -1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & 1
+      \end{pmatrix}
+    \]
+    Der metrische Tensor kann nun mithilfe dieser Abbildungen beschrieben werden.
+    \[
+      \roundBrackets{g_{mn}}_{m,n}
+      = \transpose{\jacobianΦ}η\jacobianΦ
+      = \roundBrackets{η_{pq} \partial_mΦ^p \partial_nΦ^q}_{m,n}
+    \]
+    \[
+      \roundBrackets{g_{mn}}_{m,n\in\set{0,1,2}{}} (ct,r,φ) =
+      \begin{pmatrix}
+        -1 & 0 & 0 \\
+        0 & 1 & 0 \\
+        0 & 0 & r^2
+      \end{pmatrix}
+    \]
+    Um nun das eigentliche Problem zu lösen, wollen wir zunächst eine kleine Nebenrechnung durchführen, um eine andere Form der Christoffel-Symbole zu erhalten.
+    \[
+      Γ^i_{mn} = \frac{1}{2}g^{ik}\roundBrackets{
+        \partial_m g_{nk} + \partial_n g_{mk} - \partial_k g_{mn}
+      }
+    \]
+    Zunächst bilden wir die partiellen Ableitungen des metrischen Tensors.
+    \[
+      \partial_k g_{mn} = η_{pq}\roundBrackets{\partial_k\partial_m Φ^p \partial_n Φ^q + \partial_m Φ^p \partial_k\partial_n Φ^q}
+    \]
+    Diese werden wir, wie in den Christoffel-Symbolen angegeben, zusammenführen.
+    % \[
+    %   \partial_m g_{nk} + \partial_n g_{mk} - \partial_k g_{mn} =
+    %   η_{pq}\roundBrackets{
+    %     \partial_m\partial_n Φ^p \partial_k Φ^q + \partial_n Φ^p \partial_m\partial_k Φ^q
+    %     + \partial_n\partial_m Φ^p \partial_k Φ^q + \partial_m Φ^p \partial_n\partial_k Φ^q
+    %     -\partial_k\partial_m Φ^p \partial_n Φ^q - \partial_m Φ^p \partial_k\partial_n Φ^q
+    %   }
+    % \]
+    \begin{align*}
+      &\partial_m g_{nk} + \partial_n g_{mk} - \partial_k g_{mn} \\
+      &= η_{pq}(
+        \begin{aligned}[t]
+          &\partial_m\partial_n Φ^p \partial_k Φ^q + \partial_n Φ^p \partial_m\partial_k Φ^q \\
+          + &\partial_n\partial_m Φ^p \partial_k Φ^q + \partial_m Φ^p \partial_n\partial_k Φ^q \\
+          - &\partial_k\partial_m Φ^p \partial_n Φ^q - \partial_m Φ^p \partial_k\partial_n Φ^q)
+        \end{aligned} \\
+      &=
+        \begin{aligned}[t]
+          &2η_{pq} \partial_m\partial_n Φ^p \partial_k Φ^q \\
+          &+ η_{pq}( \partial_n Φ^p \partial_m\partial_k Φ^q - \partial_k\partial_m Φ^p \partial_n Φ^q )
+        \end{aligned} \\
+      &= 2η_{pq} \partial_k Φ^q \partial_m\partial_n Φ^p
+    \end{align*}
+    Die Jacobi-Matrix der gegebenen Polarkoordinaten ist invertierbar mit $\jacobian\bar{Φ} \define \inverse{\jacobianΦ}$, sofern wir das Argument des Radius ungleich Null wählen.
+    Durch diese Eigenschaft erhalten wir die folgende Formel.
+    \[
+      \roundBrackets{g^{mn}}_{m,n} = \jacobian\bar{Φ}η\transpose{\jacobian\bar{Φ}}
+      = \roundBrackets{η^{pq}\partial_p \bar{Φ}^m \partial_q \bar{Φ}^n}_{m,n}
+    \]
+    Diese Resultate setzen wir nun in die Christoffel-Symbole ein und erhalten die folgende neue Form.
+    \begin{align*}
+      Γ^l_{mn}
+      &= η^{ij} \partial_i\bar{Φ}^l \partial_j\bar{Φ}^k η_{pq} \partial_k Φ^q \partial_m\partial_n Φ^p \\
+      &= η^{ij} \partial_i\bar{Φ}^l η_{pq} δ_j^q \partial_m\partial_n Φ^p \\
+      &= η^{ij} η_{pj} \partial_i\bar{Φ}^l \partial_m\partial_n Φ^p \\
+      &= δ^i_p \partial_i\bar{Φ}^l \partial_m\partial_n Φ^p \\
+      &= \partial_i\bar{Φ}^l \partial_m\partial_n Φ^i
+    \end{align*}
+    Die Invertierbarkeit der Jacobi-Matrix erlaubt uns zudem das Folgende.
+    \[
+      \partial_m \partial_n Φ^k = Γ^i_{mn} \partial_i Φ^k
+    \]
+    Wir definierun nun γ als die Kurve des Lichts im Inertialsystem und $q$ als die Kurve des Lichtes in den gegebenen Polarkoordinaten.
+    \[
+      \function{γ}{\setReal}{\setReal^3}
+      \separate
+      \function{q}{\setReal}{\setReal\times\setReal^+_0\times[0,2π)}
+    \]
+    Beide Kurven sind zweimal stetig differenzierbar und verbunden durch die folgende Beziehung.
+    \[
+      γ \define Φ\circ q
+    \]
+    Demnach ergeben sich für die Ableitungen der Kurve γ die folgenden Terme.
+    \begin{align*}
+      γ' &= \roundBrackets{\jacobian{Φ}\circ q} \cdot q' \\
+      γ'' &= \roundBrackets{\jacobian^2Φ\circ q} (q',q') + \roundBrackets{\jacobianΦ\circ q} \cdot q'' \\
+      &=
+        \begin{aligned}[t]
+          &\left[ \roundBrackets{\partial_n\partial_m Φ^k\circ q} \cdot q'^m q'^n \right. \\
+          &\left. + \roundBrackets{\partial_m Φ^k\circ q} \cdot q''^m \right]_k
+        \end{aligned}
+    \end{align*}
+    Hier können wir die zweiten Ableitungen durch die Christoffel-Symbole beschreiben.
+    \begin{align*}
+      γ''^k &=
+        \begin{aligned}[t]
+          &\roundBrackets{Γ^i_{mn}\partial_i Φ^k\circ q} \cdot q'^m q'^n \\
+          &+ \roundBrackets{\partial_m Φ^k\circ q} \cdot q''^m
+        \end{aligned} \\
+      &= \roundBrackets{\partial_m Φ^k\circ q} \underbrace{\boxBrackets{q''^m + \roundBrackets{Γ^m_{ij}\circ q} \cdot q'^i q'^j}}_{=0} \\
+      &= 0
+    \end{align*}
+    Die angegebenen Ausdrücke müssen Null werden, da es sich bei den Termen der rechten Klammer um die linken Seiten der Geodätengleichungen im System der Polarkoordinaten handelt.
+    Das Lichtsignal bewegt sich auf den Geodäten.
+    Wir haben gezeigt, dass die Kurve des Lichts im Inertialsystem eine gleichförmig geradlinige Bewegung ausführt, da die Gleichung $γ'' = 0$ gilt.
+    Die Kurve des Lichts muss zudem die konstante Geschwindigkeit $c$ aufweisen, da Licht die folgende Gleichung erfüllen muss.
+    \[
+      g_{mn}q'^m q'^n = 0
+    \]
+
+    Analog lässt sich diese allgemeine Betrachtung auch durch direktes Nachrechnen anhand der gegebenen Metrik zeigen.
+    Wir definieren zunächst die Lagrange-Funktion und konstruieren die Geodätengleichungen.
+    \[
+      \function{L}{\setReal\times\roundBrackets{\setReal\times\setReal^+_0\times[0,2π)}^2}{\setReal}
+    \]
+    \[
+      L(λ,q,q')\define g_{mn}(q) q'^m q'^n
+    \]
+    Die Euler-Lagrange-Gleichungen ergeben sich wie folgt, wobei $ct \define q^0$, $r\define q^1$ und $φ\define q^2$.
+    Zudem müssen wir beachten, dass es sich um Licht handelt.
+    \[
+      r'' - rφ'^2 = 0
+      \separate
+      φ'' + \frac{2}{r}r'φ' = 0
+    \]
+    \[
+      t'' = 0
+      \separate
+      r'^2 + r^2φ'^2 = c^2t'^2
+    \]
+    Nun berechnen wir die zweiten Ableitungen der Kurve im Inertialsystem.
+    \begin{align*}
+      γ''^1 &=
+        \begin{aligned}[t]
+          r''\cosφ &- r'φ'\sinφ - r'φ'\sinφ \\
+          &- rφ''\sinφ - rφ'^2\cosφ
+        \end{aligned} \\
+      &=
+        \begin{aligned}[t]
+          &\roundBrackets{r'' - rφ'^2}\cosφ \\
+          &- \roundBrackets{rφ'' + 2r'φ'}\sinφ
+        \end{aligned} \\
+      &= 0 \\
+      γ''^2 &=
+        \begin{aligned}[t]
+          r''\sinφ &+ r'φ'\cosφ + r'φ'\cosφ \\
+          &+ rφ''\cosφ - rφ'^2\sinφ
+        \end{aligned} \\
+      &=
+        \begin{aligned}[t]
+          &\roundBrackets{r'' - rφ'^2}\sinφ \\
+          &+ \roundBrackets{rφ'' + 2r'φ'}\cosφ
+        \end{aligned} \\
+      &= 0
+    \end{align*}
+    Auch nach dieser Rechnung breitet sich Licht geradlinig aus.
+    Für die Lösung der Differentialgleichungen verwenden wir zunächst die Geodätengleichung für $φ''$ und separieren $r$ und $φ$.
+    \[
+      \frac{φ''}{φ'} = -\frac{2r'}{r}
+    \]
+    Diese Gleichung lässt sich nun sehr leicht durch Integration und die Anwendung der Substitutionsregel lösen.
+    \[
+      \integral{λ_1}{λ_2}{\frac{φ''(λ)}{φ'(λ)}}{λ} = \integral{φ'(λ_1)}{φ'(λ_2)}{\frac{1}{s}}{s} = \ln \frac{φ'(λ_2)}{φ'(λ_1)}
+    \]
+    \[
+      \integral{λ_1}{λ_2}{\frac{-2r'(λ)}{r(λ)}}{λ} = \integral{r(λ_1)}{r(λ_2)}{\frac{-2}{s}}{s} = \ln \frac{r^2(λ_1)}{r^2(λ_2)}
+    \]
+    Wir erhalten damit den folgenden Zusammenhang für Konstanten $K,λ_0\in\setReal$.
+    \[
+      φ' = \frac{K}{r^2} \define \frac{φ'(λ_0)r^2(λ_0)}{r^2}
+    \]
+    Die Geodätengleichung für $t''$ sagt uns, dass es sich bei $t'$ um eine Konstante handelt.
+    Diese beiden Zusammenhänge wenden wir nun auf die Geodätengleichung für $r''$ und das metrische Skalarprodukt an.
+    \[
+      r'' - \frac{K^2}{r^3} = 0
+      \separate
+      r'^2 + \frac{K^2}{r^2} = c^2t'^2
+    \]
+    Durch Ableiten der zweiten Gleichung sehen wir, dass jede Lösung der zweiten Gleichung auch eine Lösung der ersten Gleichung ist.
+    \[
+      2r'r'' - 2r'\frac{K^2}{r^3} = 0
+    \]
+    Das Lösen der zweiten Gleichung ist durch Trennung der Variablen möglich.
+    Wir stellen diese Gleichung zunächst um.
+    \[
+      \pm r' \boxBrackets{ c^2t'^2 - \frac{K^2}{r^2} }^{-\frac{1}{2}} = 1
+    \]
+    Jetzt können wir durch Integrieren und Verwendung der Substitutionsregel die Differentialgleichung lösen.
+    Es sei dafür $λ\in\setReal$.
+    \begin{align*}
+      &\pm(λ-λ_0) \\
+      &= \integral{λ_0}{λ}{ r'(s) \boxBrackets{ c^2t'^2 - \frac{K^2}{r^2(s)} }^{-\frac{1}{2}} }{s} \\
+      &= \integral{r(λ_0)}{r(λ)}{ \roundBrackets{ c^2t'^2 - \frac{K^2}{s^2} }^{-\frac{1}{2}} }{s} \\
+      &= \integral{r(λ_0)}{r(λ)}{ \frac{s}{\sqrt{c^2t'^2s^2 - K^2}} } {s} \\
+      &= \frac{\sqrt{c^2t'^2r^2(λ) - K^2}}{c^2t'^2} + C
+    \end{align*}
+    \[
+      C \define - \frac{\sqrt{c^2t'^2r^2(λ_0) - K^2}}{c^2t'^2}
+    \]
+    Durch Umstellen nach $r(λ)$ erhalten wir den folgenden Ausdruck.
+    \[
+      r(λ) = \pm ct' \sqrt{\boxBrackets{\pm(λ-λ_0)-C}^2 + \frac{K^2}{c^4t'^4}}
+    \]
+    Durch Verwendung des gezeigten Zusammenhangs zwischen $r$ und $φ'$ lässt sich nun $φ'$ direkt notieren.
+    \[
+      φ'(λ) = \frac{K}{c^2t'^2\boxBrackets{\pm(λ-λ_0)-C}^2 + \frac{K^2}{c^2t'^2}}
+    \]
+    Auch diese Gleichung lässt sich integrieren und man erhält das Folgende für eine Konstante $D\in\setReal$.
+    \[
+      φ(λ) = \arctan\boxBrackets{\frac{c^2t'^2\roundBrackets{λ-λ_0-C}}{K}} + D
+    \]
+    % \[
+    %   D\define \arctan\roundBrackets{\frac{c^2t'^2C}{K}}
+    % \]
+  % section aufgabe_1 (end)
+  \end{multicols}
+
+  \newpage
+
+  \section*{Aufgabe 2} % (fold)
+  \label{sec:aufgabe_2}
+  \begin{multicols}{2}
+    \paragraph{(a):}
+    Die Geodäten-Gleichungen können im Allgemeinen wie im Folgenden gezeigt mithilfe der Christoffel-Symbole notiert werden.
+    \[
+      q''^k + Γ^k_{mn} q'^m q'^n = 0
+    \]
+    Handelt es sich nun bei $q^α$ um konstante Funktionen und damit um ein mitbewegtes Koordinatensystem, so müssen die folgenden Aussagen gelten.
+    \[
+      q'^{α} = q''^{α} = 0
+    \]
+    Die Geodätengleichungen vereinfachen sich damit zu den folgenden Gleichungen.
+    \[
+      Γ^{α}_{00}\roundBrackets{q'^0}^2 = 0
+      \separate
+      \roundBrackets{q^0}'' + Γ^0_{00} \roundBrackets{q'^0}^2 = 0
+    \]
+    In der Robertson-Walker-Geometrie kennen wir bereits die Christoffel-Symbole und können diese nutzen, um die Gleichungen weiter zu vereinfachen.
+    \[
+      Γ^k_{00} = 0 \quad\implies\quad ct'' = 0
+    \]
+    Damit wurde gezeigt, dass im System der mitbewegten Koordinaten einer Galaxie diese sich in geodätischer Bewegung befindet.
+
+    Die Geodätengleichungen lauten in einer nicht-indexbasierten Schreibweise wie folgt.
+    \begin{align*}
+      0 &=
+        \begin{aligned}[t]
+          &r'' + \frac{εr}{1-εr^2}r'^2 - r(1-εr^2)ϑ'^2 \\
+          &- r(1-εr^2)\sin^2ϑ φ'^2 + \frac{2a'\circ t}{a\circ t}r't'
+        \end{aligned}\\
+      0 &=
+        \begin{aligned}[t]
+          &ϑ'' + \frac{2}{r}r'ϑ' -\sinϑ\cosϑ φ'^2 \\
+          &+ \frac{2a'\circ t}{a\circ t}ϑ't'
+        \end{aligned} \\
+      0 &=
+        \begin{aligned}[t]
+          &φ'' + \frac{2}{r}r'φ' + 2\cotϑ ϑ'φ' \\
+          &+ \frac{2a'\circ t}{a\circ t}φ't'
+        \end{aligned} \\
+      0 &=
+        \begin{aligned}[t]
+          &c^2t'' + \frac{(aa')\circ t}{1-εr^2}r'^2 + ((aa')\circ t)r^2 ϑ'^2 \\
+          &+ ((aa')\circ t)r^2\sin^2ϑφ'^2
+        \end{aligned}
+    \end{align*}
+    Bewegt sich ein Teilchen nur in radialer Richtung, so gilt $ϑ' = φ' = 0$.
+    Dies setzen wir nun in die Geodätengleichungen ein und erhalten das Folgende.
+    \begin{align*}
+      0 &= r'' + \frac{εr}{1-εr^2}r'^2 + \frac{2a'\circ t}{a\circ t}r't' \\
+      0 &= c^2t'' + \frac{(aa')\circ t}{1-εr^2}r'^2
+    \end{align*}
+    Die resultierenden Differentialgleichungen hängen nur noch von $r$ und $t$ ab.
+    Offensichtlich stellt damit eine reine radiale Bewegung eine Lösung der Geodätengleichungen dar.
+
+    Bewegt sich ein Teilchen allerdings nur anfangs in radialer Richtung, so gelten $ϑ'(λ_0) = φ'(λ_0) = 0$ und $ϑ(λ_0) = ϑ_0\in[0,π]$ und $φ(λ_0)=φ_0\in [0,2π)$ für einen Parameter $λ_0\in\setReal$.
+    Damit ist nun allerdings ein Anfangswertproblem gegeben.
+    Nach dem Satz von Picard-Lindelöf ist die erhaltene Lösung dieses Differentialgleichungssystems jedoch global eindeutig.
+    Die gerade beschriebene Lösung erfüllt die Anfangswerte und ist damit umgekehrt die einzige mögliche Lösung.
+    Ein Teilchen welches sich anfangs in radialer Richtung fortbewegt, behält damit diese Bewegungsrichtung auch bei.
+
+    \paragraph{(b):}
+    Es sei ein unbegrenzt expandierender Robertson-Walker-Kosmos gegeben.
+    Damit ist $a$ eine stetig differenzierbare strikt monoton wachsende Funktion, welche nicht beschränkt ist.
+    \[
+      \function{a}{\setReal}{\setReal^+}
+      \separate
+      a' > 0
+      \separate
+      \lim_{t\converges\infty}a(t) = \infty
+    \]
+    Es sei $\function{q}{[λ_0,λ_1]}{\setReal^4}$ die Kurve des in Bewegung gesetzten Teilchens.
+    Dann folgt aus der radialen Geschwindigkeit und den gezeigten Aussagen aus Aufgabenteil (a), dass die folgenden Gleichungen gelten müssen, wobei $ct\define q^0$ und $r\define q^1$.
+    \begin{align*}
+      0 &= r'' + \frac{εr}{1-εr^2}r'^2 + \frac{2a'\circ t}{a\circ t}r't' \\
+      0 &= c^2t'' + \frac{(aa')\circ t}{1-εr^2}r'^2
+    \end{align*}
+    Um eine valide Kurve des Teilchens zu beschreiben, muss die Zeitkurve strikt monoton wachsen.
+    Nach der zweiten Gleichung ist die zweite Ableitung $t''$ jedoch negativ.
+    \[
+      c^2t'' = -\frac{(aa')\circ t}{1-εr^2}r'^2
+    \]
+    Um zu verhindern, dass es ein $λ\in\setReal$ gibt, sodass $t'(λ) \leq 0$, muss das Folgende gelten.
+    \[
+      \lim_{λ\converges \infty} t''(λ) = 0 = \lim_{λ\converges \infty}\frac{(aa')\circ t(λ)}{1-εr^2(λ)}r'^2(λ)
+    \]
+    Diese Aussage ist äquivalent zu der folgenden Aussage, da der Faktor vor $r'^2$ ständig positiv ist.
+    \[
+      \lim_{λ\converges \infty}r'(λ) = 0
+    \]
+    Das Teilchen muss also im Galaxiensubstrat in Grenzwert zur Ruhe kommen.
+
+    Es sei nun $ε=0$.
+    In diesem Falle vereinfachen sich die gezeigten Geodätengleichungen noch weiter.
+    \[
+      r'' + \frac{2a'\circ t}{a\circ t}r't' = 0
+    \]
+    \[
+      c^2t'' + ((aa')\circ t)r'^2 = 0
+    \]
+    Wir werden die erste Gleichung verwenden und die Variablen $r$ und $t$ separieren.
+    \[
+      \frac{r''}{r'} = - \frac{2a'\circ t}{a\circ t}t'
+    \]
+    Beide Seiten lassen sich nun durch die Anwendung der Substitutionsregel integrieren.
+    \[
+      \integral{λ_0}{λ}{ \frac{r''(s)}{r'(s)} }{s} = \ln \frac{r'(λ)}{r'(λ_0)}
+    \]
+    \[
+      \integral{λ_0}{λ}{ - \frac{2a'\circ t}{a\circ t}t' }{s} = \integral{t(λ_0)}{t(λ)}{ -\frac{2a'(s)}{a(s)} }{s}
+    \]
+    \[
+      = \integral{a(t(λ_0))}{a(t(λ))}{ -\frac{2}{s} }{s} = \ln \frac{a^2(t(λ_0))}{a^2(t(λ))}
+    \]
+    Durch Gleichsetzen der beiden Integrale entsteht der folgende Zusammenhang zwischen $r'$ und $t$.
+    \[
+      r'(λ) = \frac{r'(λ_0)a^2(t(λ_0))}{a^2(t(λ))} \reverseDefine \frac{K}{a^2(t(λ))}
+    \]
+    Diesen Zusammenhang wollen wir nun in der zweiten Gleichung anwenden.
+    \[
+      c^2t'' + K^2\frac{a'\circ t}{a^3\circ t} = 0
+    \]
+    Wir multiplizieren sie mit $t'$, um eine Integration zu ermöglichen.
+    \[
+      c^2t't'' + K^2 t'\frac{a'\circ t}{a^3\circ t} = 0
+    \]
+    Auch hier verwenden wir bei der Integration wieder die Substitutionsregel.
+    \[
+      \frac{c^2t'^2}{2} - \frac{K^2}{2a^2\circ t} = \frac{c^2t'^2(λ_0)}{2} - \frac{K^2}{2a^2(t(λ_0))} \reverseDefine \frac{C}{2}
+    \]
+    Durch Umstellen dieser Gleichung erhalten wir den folgenden Ausdruck.
+    \[
+      \pm ct' \roundBrackets{C + \frac{K^2}{a^2\circ t}}^{-\frac{1}{2}} = 1
+    \]
+    Auch hier lässt sich mithilfe der Substitutionsregel die Gleichung integrieren.
+    \[
+      \integral{λ_0}{λ}{ ct'(s) \roundBrackets{C + \frac{K^2}{a^2(t(s))}}^{-\frac{1}{2}} }{s} = \pm(λ-λ_0)
+    \]
+    \[
+      = \integral{t(λ_0)}{t(λ)}{c\roundBrackets{C + \frac{K^2}{a^2(s)}}^{-\frac{1}{2}}}{s}
+    \]
+    Zum Schluss erhalten wir durch den Zusammenhang von $r'$ und $t$ noch die folgende Gleichung.
+    \[
+      r(λ) = r(λ_0) + \integral{λ_0}{λ}{ \frac{K}{a^2(t(s))} }{s}
+    \]
+    Offensichtlich muss sich der Punkt hält das Teilchen bei der radialen Koordinate $r_\infty$.
+    \[
+      r_\infty \define \lim_{λ\converges \infty}r(λ)
+    \]
+    \[
+      r_\infty = r(λ_0) + \integral{λ_0}{\infty}{ \frac{K}{a^2(t(s))} }{s}
+    \]
+    % \[
+    %   \roundBrackets{r\circ\inverse{t}}' = \frac{r'\circ\inverse{t}}{t'\circ\inverse{t}}
+    % \]
+    % \[
+    %   \roundBrackets{r\circ\inverse{t}}'' = \frac{r''\circ\inverse{t} + \roundBrackets{r'\circ \inverse{t}}\roundBrackets{t''\circ\inverse{t}}}{\roundBrackets{t'\circ\inverse{t}}^2}
+    % \]
+  \end{multicols}
+  % section aufgabe_2 (end)
+
+\end{document}

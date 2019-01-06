@@ -1,0 +1,43 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{exercises}[2017/07/06 exercises and solutions v0.1]
+
+\RequirePackage{pgfkeys}
+\RequirePackage{marginnote}
+
+\newenvironment{exercise}[1][]{%
+  \pgfkeys{%
+    /exercise/.style = /exercise/.cd,
+    exercise,
+    call/.initial = Aufgabe,
+    title/.initial =,
+    points/.initial =,
+    #1
+  }%
+  \setlength\parindent{0mm}
+  \bigskip\par%
+  {
+    \large%
+    \textbf{%
+      \pgfkeysifdefined{/exercise/local/call}{%
+        \pgfkeysvalueof{/exercise/local/call}%
+      }{%
+        \pgfkeysvalueof{/exercise/call}%
+      }%
+    }%
+  }
+  \qquad%
+  \textit{%
+    \pgfkeysifdefined{/exercise/local/title}{%
+      \pgfkeysvalueof{/exercise/local/title}%
+    }{%
+      \pgfkeysvalueof{/exercise/title}%
+    }%
+  }%
+  \hfill
+  \marginnote{\pgfkeysvalueof{/exercise/points}}%
+  \par\medskip
+}{%
+  \bigskip\par
+}
+
+\endinput

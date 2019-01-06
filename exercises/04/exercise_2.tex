@@ -1,0 +1,125 @@
+\documentclass{atistandalonetask}
+\usepackage{atistandard}
+\begin{document}
+  \begin{atiTask}[
+    title = Das \textsc{Olbers}-Paradoxon
+  ]
+    \begin{atiSubtasks}
+      \item{ \locallabel{a}
+        \textbf{Vorbereitung:}
+        Ein räumlich flaches Universum enthalte ein einziges Substrat mit dem Zustandsparameter $w$.
+        Leiten Sie die folgende verallgemeinerte \textsc{Mattig}-Formel für die Leuchtkraft-Entfernung $D_\mathrm{L}$ als Funktion der Rotverschiebung $z$ her.
+        \[
+          D_\mathrm{L}(z) = \frac{2c}{H_0(1+3w)}(1+z)\boxBrackets{1 - \frac{1}{(1+z)^{\frac{1+3w}{2}}}}
+        \]
+      }
+      \item{
+        In diesem Universum seien Standard-Kerzen der Leuchtkraft $L$ gleichmäßig im Raum verteilt.
+        Diese werden weder erzeugt noch vernichtet.
+        Ihre Anzahldichte zur Zeit $t_0$ sei $n_0$.
+
+        Berechnen Sie den beobachtbaren Fluss $F_{*,0}$ einer einzelnen solchen Standardkerze, die die Rotverschiebung $z$ hat.
+      }
+      \item{
+        Berechnen Sie unter Verwendung der bisherigen Resultate den Fluss aller Standardkerzen, deren Rotverschiebung im Intervall $[z,z+\infinitesimal{z}]$ liegt, sowie den Gesamt-Fluss durch Integration über alle Rotverschiebungen.
+      }
+      \item{
+        Bestimmen Sie den Einfluss der Expansion auf die Dunkelheit des Nachthimmels, indem Sie zum Vergleich die bisherigen Schritte dieser Aufgabe für ein statisches \textsc{Euklid}isches Universum mit gleicher Leuchtdauer $t_*$ der Galaxien und gleichem Weltalter $t_0$ wiederholen.
+
+        Nehmen Sie als \textbf{Beispiel} sowohl für einen \textsc{Einstein-DeSitter}-Kosmos als auch für einen reinen Strahlungskosmos an, dass Galaxien einmal bei der Rotverschiebung $z_* = 6$ zu leuchten begannen und zum anderen, dass sie bereits seit dem Urknall existieren.
+      }
+      \item{
+        Moderne Himmelsdurchmusterungen legen die folgende Leuchtkraft-Dichte nahe.
+        \[
+          n_0L = 2\cdot 10^8 h_0 L_\odot \appendUnit{Mpc^{-3}}
+        \]
+
+        Berechnen Sie die Nachthimmels-Helligkeit für einen \textsc{Einstein-DeSitter}-Kosmos mit dem dimensionslosen \textsc{Hubble}-Parameter $h_0=0.70$ und vergleichen Sie mit der Solarkonstante $F_\odot = 1.4\cdot 10^3 \appendUnit{\frac{W}{m^2}}$.
+
+        \begin{atiNote}
+          Für den Vergleich mit der Solarkonstanten benötigen Sie den Gesamt-Fluss aller Standard-Kerzen pro Raumwinkel-Einheit.
+        \end{atiNote}
+      }
+    \end{atiSubtasks}
+  \end{atiTask}
+  \begin{atiSolution}
+    \begin{atiSubtaskSolutions}
+      \item[\localref{a}]{
+        Es ist bekannt, dass unter der Annahme einer flachen Robertson-Walker-Raumzeit die folgende Formel für die Leuchtkraft-Entfernung $D_\mathrm{L}$ gilt.
+        \[
+          \function{D_\mathrm{L}}{\setReal_0^+}{\setReal^+}
+          \separate
+          D_\mathrm{L}(z) \define χ(z)a(t_0)(1+z)
+        \]
+        \[
+          \function{χ}{\setReal}{\setReal}
+          \separate
+          χ(t) \define \integral{t_0}{t}{\frac{c}{a(s)}}{s}
+        \]
+        \begin{align*}
+          0 &= \frac{3\timeDerivative{a}^2}{a^2} - κc^4μ \\
+          0 &= \frac{2\timeSecondDerivative{a}}{a} + \frac{\timeDerivative{a}^2}{a^2} + κpc^2 \\
+          0 &= \timeDerivative{μ} + \roundBrackets{μ + \frac{p}{c^2}} \frac{3\timeDerivative{a}}{a} \\
+          w &= \frac{p}{μc^2}
+        \end{align*}
+        Zunächst teilen wir die Kontinuitätsgleichung durch $μ$.
+        \[
+          \frac{\timeDerivative{μ}}{μ} + 3(1+w) \frac{\timeDerivative{a}}{a} = 0
+        \]
+        Durch Integration über die Zeit und durch die Verwendung der Substitutionsregel erhalten wir die folgende Gleichung.
+        \[
+          \ln \frac{μ(t)}{μ(t_0)} + 3(1+w) \ln \frac{a(t)}{a(t_0)} = 0
+        \]
+        \[
+          μ(t) = μ(t_0) \boxBrackets{ \frac{a(t)}{a(t_0)} }^{-3(1+w)}
+        \]
+        Die erhaltene Lösung setzen wir nun in die Friedman-Gleichung ein.
+        \[
+          \frac{3\timeDerivative{a}^2}{a^2} = κc^4μ(t_0)\boxBrackets{\frac{a(t)}{a(t_0)}}^{-3(1+w)}
+        \]
+        \[
+          a^{\frac{1+3w}{2}}\timeDerivative{a} = \sqrt{\frac{1}{3}κc^4μ(t_0) a^{3(1+w)}(t_0)}
+        \]
+        Durch Integration über die Zeit und erneute Anwendung der Substitutionsregel erhält man nach Umstellen die folgende Lösung.
+        \[
+          a(t) = a(t_0) \boxBrackets{ 1 + A(1+w)(t-t_0) }^{\frac{2}{3(1+w)}}
+        \]
+        \[
+          A \define \sqrt{\frac{3}{4}κc^4μ(t_0)}
+        \]
+        \begin{align*}
+          -r(t)
+          &= \integral{t_0}{t}{\frac{c}{a(s)}}{s} \\
+          &= \frac{c}{a(t_0)} \integral{t_0}{t}{ \boxBrackets{1+A(1+w)(s-t_0)}^{-\frac{2}{3(1+w)}} }{s} \\
+          &= \frac{c}{a(t_0)}
+            \appendValue{
+              \frac{\boxBrackets{1+A(1+w)(s-t_0)}^{1-\frac{2}{3(1+w)}}}{A(1+w)\roundBrackets{1-\frac{2}{3(1+w)}}}
+            }{s=t_0}^t \\
+          &= \frac{c}{a(t_0)} \frac{3}{A(1+w)}
+          \appendValue{
+            \boxBrackets{\frac{a(s)}{a(t_0)}}^{\frac{1+3w}{2}}
+          }{t_0}^t \\
+          &= \frac{c}{a(t_0)} \frac{3}{A(1+w)}
+          \appendValue{
+            \boxBrackets{\frac{1}{1+z(s)}}^{\frac{1+3w}{2}}
+          }{t_0}^t \\
+          &= \frac{c}{a(t_0)} \frac{3}{A(1+w)}
+              \boxBrackets{\roundBrackets{\frac{1}{1+z(t)}}^{\frac{1+3w}{2}} -1} \\
+        \end{align*}
+        \[
+          \timeDerivative{a}(t) = a(t_0)\frac{2A}{3}
+          \boxBrackets{
+            1 + A(1+w)(t-t_0)
+          }^{\frac{2}{3(1+w)}-1}
+        \]
+        \[
+          H_0 = \frac{\timeDerivative{a}(t_0)}{a(t_0)} = \frac{2A}{3}
+        \]
+        Dies setzen wir ineinander ein.
+        \[
+          D_\mathrm{L}(z) = \frac{2c}{H_0(1+3w)}(1+z)\boxBrackets{1 - \roundBrackets{ \frac{1}{1+z} }^{\frac{1+3w}{2}}}
+        \]
+      }
+    \end{atiSubtaskSolutions}
+  \end{atiSolution}
+\end{document}
